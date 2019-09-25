@@ -111,8 +111,8 @@ class Form extends React.Component {
       }else{
         alert("Formulier heeft errors.")
         this.setState({send: false});
-        if(this.props.total[0].bedrag == "0"){
-          alert("Vul het bedrag in")
+        if((this.props.total[0].bedrag == "0")||(this.props.total[0].bedragIngevuld == false)){
+          alert("Vul het verzekerings bedrag in")
         }if(this.props.total[0].totalVogel == "0"){
           alert("Voer het aantal vogels in")
         }

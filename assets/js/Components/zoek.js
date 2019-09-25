@@ -58,7 +58,7 @@ componentDidMount(){
           
     }
       return(
-        <div style={{position: 'absolute', backgroundColor: "#ffff", width: 150 }}>
+        <div style={{position: 'absolute', backgroundColor: "#ffff", width: 320 }}>
         <table className="table table-striped table-hover active"style={{ border: "1px solid grey", marginBottom: 0}} >
           <tbody>
           {this.state.displayedVogels.map((el)=><tr key={el.Klasse_nr} onClick={()=>this.suggestionSelected(el)}>{el.Omschrijving}</tr>)}

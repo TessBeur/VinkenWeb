@@ -10,7 +10,7 @@ class TableBirds extends React.Component {
     constructor(props) {
       super(props);
       
-      this.state={filterText: ""}
+      this.state={filterText: "", test:false}
       this.state.TotalAll=[
         {
         astamAant:"0",
@@ -19,7 +19,8 @@ class TableBirds extends React.Component {
         bedrag:"0",
         astamTel:"0",
         bstelTel:"0",
-        totalVogel:"0"
+        totalVogel:"0",
+        bedragIngevuld:false
         }];
     
       this.state.products = [
@@ -40,8 +41,12 @@ class TableBirds extends React.Component {
       this.state.products.splice(index, 1);
       this.setState(this.state.products);
     };
-  
+ 
     handleAddEvent(evt) {
+      var test=[];
+      var test= this.state.products.find(item=>item.bedrag =="0");
+    if (!test){
+      console.log(this.state.products, test)      
       var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
       var product = {
         id: id,
@@ -55,8 +60,11 @@ class TableBirds extends React.Component {
       }
       this.state.products.push(product);
       this.setState(this.state.products);
-  
+    }else{
+      alert("Vul verzekerinsbedrag in.")
     }
+    }
+    
   
     handleProductTable(evt) {
       var item = {
@@ -78,6 +86,17 @@ class TableBirds extends React.Component {
     });
       this.setState({products:newProducts});
       
+      var test={};
+      var test= this.state.products.find(item=>item.bedrag =="0");
+      if(!test){
+
+        this.setState({test:true})
+        //alles bedragen ingevuld
+      }else{
+        this.setState({test:false})
+      }
+      // const test = (this.state.products.reduce((astam, product)));
+      const bedragIng=this.state.test;
     const Totalastam = (this.state.products.reduce((astam, product) => astam + parseInt(product.astam,0), 0));
     const Totalbstel = this.state.products.reduce((bstel, product) => bstel + parseInt(product.bstel, 0), 0);
     const Totalenk = this.state.products.reduce((enk, product) => enk + parseInt(product.enk, 0), 0);
@@ -89,7 +108,8 @@ class TableBirds extends React.Component {
             bedrag:Totalbedrag,
             astamTel:Totalastam*4,
             bstelTel:Totalbstel*2,
-            totalVogel:Totalastam*4+Totalbstel*2+Totalenk
+            totalVogel:Totalastam*4+Totalbstel*2+Totalenk,
+            bedragIngevuld:bedragIng
             }]
         });
     }
