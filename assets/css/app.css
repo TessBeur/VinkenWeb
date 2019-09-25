@@ -1,0 +1,21 @@
+.SearchText{
+  width: 100%;
+  border: 1px solid grey;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0,.1), 0 2px 4px 1px rgba(0,0,0,.18);
+  background-color: blueviolet;
+
+
+}
+
+.SearchText input{
+  width: 100%;
+  border:none;
+ 
+
+}
+
+.SearchText ul{
+  list-style-type: none;
+ 
+
+}
