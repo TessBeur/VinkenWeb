@@ -1,7 +1,16 @@
 import React from 'react';
 
+const email=React.createContext();
+
 class Footer extends React.Component {
-    
+    constructor(props) {
+        super(props);
+        this.state = {
+          day: new Date().getDate(),
+          month: new Date().getMonth()+1,
+          year: new Date().getFullYear()
+        };
+      }
 
     render() {
         return (
@@ -14,9 +23,9 @@ class Footer extends React.Component {
                 <br></br>
                <div style={{display: "flex", flexWrap:"wrap"}}>
                <div style={{flex:1}}>Datum:<br></br><br></br>
-               <br></br>Handtekening:</div>
-                <div style={{flex:1}}>_______________________________<br></br><br></br>
-                <br></br>_______________________________</div>
+               <br></br>Email:</div>
+                <div style={{flex:1}}>{this.state.day}/{this.state.month}/{this.state.year}<br></br><br></br>
+                <br></br>{this.props.email}</div>
                 <div style={{flex:1}}>Ondergetekende verklaart dat de hiervoor vermelde inschrijving:
                 <br></br> zijn/haar eigendom is en 
                 <br></br>   - hij/zij inschrijft onder de voor deze tentoonstelling
@@ -32,7 +41,8 @@ class Footer extends React.Component {
                 - uit een bedrijf / locatie / kwekerij waar de laatste 60 dagen <strong>géén</strong> Psittacosis (Chlamydophila psittaci) is vastgesteld, en dat zijn<br></br>
                 - niet in contact zijn geweest met vogels uit een bedrijf waar de laatste 60 dagen Psittacosis (Chlamydophila psitaci) is vastgesteld.
                 
-                </div>                    
+                </div>   
+                                 
             </div>
 
         );

@@ -9,11 +9,21 @@ class ProductRow extends React.Component {
         this.state = {
             klasnr: "",
             vogel:"",
-            vogels:this.props.product
+            vogels:this.props.product,
+            checkbox:false
         }
         this.onUpdate = this.onUpdate.bind(this);
         this.onProductTableUpdate= this.props.onProductTableUpdate.bind(this);
-      }
+        this.handleClick = this.handleClick.bind(this);  
+    }
+      handleClick() {
+        this.setState(function(prevState) {
+            return {checkbox: !prevState.checkbox};
+        });
+        if(this.state.checkbox==true){
+            this.props.product.openklas="nee"
+        }else{this.props.product.openklas="ja"}
+    }
      
     onDelEvent() {
       this.props.onDelEvent(this.props.product);
@@ -43,7 +53,7 @@ class ProductRow extends React.Component {
             <td>
                 <div className="checkbox">
                     <label>
-                        <input type="checkbox" name="openklas" onChange={this.props.onProductTableUpdate} id={this.props.product.id}/>
+                        <input type="checkbox" name="openklas" onChange={this.handleClick} id={this.props.product.id}/>
                     </label>
                 </div>
                 </td>

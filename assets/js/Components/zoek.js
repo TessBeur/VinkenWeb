@@ -12,12 +12,6 @@ export default class Search extends React.Component{
       data: null,
       vogel:"", 
       isToggleOn:false,
-      data2:[
-        {id:1, name:"een"},
-        {id:2, name:"twee"},
-        {id:3, name:"drie"},
-        {id:4, name:"vier"},
-    ]
 
     };
     this.getInitialState = this.getInitialState.bind(this);
@@ -92,7 +86,7 @@ componentDidMount(){
             displayedVogels:[],
                }))
       return null;
-    }else if(this.state.isToggleOn==true){
+    }else if(this.state.isToggleOn==true && this.state.text==''){
         
        return(
         <div style={{position: 'absolute', backgroundColor: "#ffff", width: 320,}}>
@@ -102,7 +96,7 @@ componentDidMount(){
             </tbody>
           </table>
         </div>
-       )}
+       )} else if (this.state.text){
       return(
         <div style={{position: 'absolute', backgroundColor: "#ffff", width: 320,}}>
         <table className="table table-striped table-hover active"style={{ border: "1px solid grey", marginBottom: 0 }} >
@@ -112,15 +106,16 @@ componentDidMount(){
         </table>
         </div>
       )
+       }
   }
 
   render () {
     const {text} =this.state;
     return (
-      <td>
+      <td> 
         
          <td> <input className="form-control" value={text} type="text" onChange={this.searchHandler} placeholder="Zoek..." name="soort" id="2"/></td>
-         <td><button className="btn btn-succes" style={{paddingLeft:0, paddingRight:0}} onClick={this.handleClick}>˅</button></td>
+         <td><button className="btn btn-default" style={{paddingLeft:0, paddingRight:0}} onClick={this.handleClick}>˅</button></td>
           {this.renderSuggestions()}
           
           

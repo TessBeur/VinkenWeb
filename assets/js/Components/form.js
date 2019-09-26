@@ -2,6 +2,7 @@
 import React from 'react';
 import Buttons from './button';
 
+
 class Form extends React.Component {
     constructor(props){
       super(props);
@@ -104,18 +105,19 @@ class Form extends React.Component {
     contactSubmit(e){
       e.preventDefault();
       if(this.handleValidation() && this.props.total[0].bedrag != "0" && this.props.total[0].totalVogel != "0"){
-        
         this.setState({send: true});
+        
         alert("Inschrijving compleet u ontvangt binnen enkele minuten een bevestigings email");
      
       }else{
-        alert("Formulier heeft errors.")
-        this.setState({send: false});
+        if(!this.handleValidation()){
+        alert("Formulier heeft errors.")}
         if((this.props.total[0].bedrag == "0")||(this.props.total[0].bedragIngevuld == false)){
           alert("Vul het verzekerings bedrag in")
         }if(this.props.total[0].totalVogel == "0"){
           alert("Voer het aantal vogels in")
         }
+        this.setState({send: false});
       }
   
     }
@@ -124,6 +126,7 @@ class Form extends React.Component {
       let fields = this.state.fields;
       fields[field] = e.target.value;        
       this.setState({fields});
+      this.props.onSetEmail(this.state.fields.email)
     }
   
     render(){

@@ -2,6 +2,7 @@ import React from 'react';
 import Total from './total';
 import ProductTable from './producttable';
 import Form from './form';
+import Footer from './footer';
 
 
 
@@ -10,7 +11,7 @@ class TableBirds extends React.Component {
     constructor(props) {
       super(props);
       
-      this.state={filterText: "", test:false}
+      this.state={filterText: "", checkBedrag:false, checkSoort:false, email:''}
       this.state.TotalAll=[
         {
         astamAant:"0",
@@ -28,13 +29,15 @@ class TableBirds extends React.Component {
             id:"1",
             klasnmb:'xxxxxxx',
             soort:"",
-            openklas:false,
+            openklas:"nee",
             astam:"0",
             bstel:"0",
             enk:"0",
             bedrag:"0"
         }
       ];
+      this.handleEmail = this.handleEmail.bind(this);
+    
     }
     handleRowDel(product) {
       var index = this.state.products.indexOf(product);
@@ -43,10 +46,11 @@ class TableBirds extends React.Component {
     };
  
     handleAddEvent(evt) {
-      var test=[];
-      var test= this.state.products.find(item=>item.bedrag =="0");
-    if (!test){
-      console.log(this.state.products, test)      
+      var checkBedrag=[];
+      var checkBedrag= this.state.products.find(item=>item.bedrag =="0");
+      var checkSoort=[];
+      var checkSoort= this.state.products.find(item=>item.soort =="");
+    if (!checkBedrag && !checkSoort){   
       var id = (+ new Date() + Math.floor(Math.random() * 999999)).toString(36);
       var product = {
         id: id,
@@ -61,7 +65,11 @@ class TableBirds extends React.Component {
       this.state.products.push(product);
       this.setState(this.state.products);
     }else{
+      if(checkBedrag){
       alert("Vul verzekerinsbedrag in.")
+      } else if(checkSoort){
+        alert("Kies een soort.")
+      }
     }
     }
     
@@ -86,17 +94,17 @@ class TableBirds extends React.Component {
     });
       this.setState({products:newProducts});
       
-      var test={};
-      var test= this.state.products.find(item=>item.bedrag =="0");
-      if(!test){
+      var checkBedrag={};
+      var checkBedrag= this.state.products.find(item=>item.bedrag =="0");
+      if(!checkBedrag){
 
-        this.setState({test:true})
+        this.setState({checkBedrag:true})
         //alles bedragen ingevuld
       }else{
-        this.setState({test:false})
+        this.setState({checkBedrag:false})
       }
-      // const test = (this.state.products.reduce((astam, product)));
-      const bedragIng=this.state.test;
+      // const checkBedrag = (this.state.products.reduce((astam, product)));
+    const bedragIng=this.state.checkBedrag;
     const Totalastam = (this.state.products.reduce((astam, product) => astam + parseInt(product.astam,0), 0));
     const Totalbstel = this.state.products.reduce((bstel, product) => bstel + parseInt(product.bstel, 0), 0);
     const Totalenk = this.state.products.reduce((enk, product) => enk + parseInt(product.enk, 0), 0);
@@ -113,19 +121,23 @@ class TableBirds extends React.Component {
             }]
         });
     }
+    handleEmail(emailValue){
+     this.setState({email: emailValue});//get ingevuld email van from
+  }
         
     
     render() {
       // alle vogels staan in this.state.products
+      //console.log(this.state.products)
       return (
         <div>
           <div style={{display: "flex", flexWrap:"wrap"}}>
             <div style={{flex:1,marginRight:10}}>
           <Total astam={this.state.TotalAll[0].astamAant} bstel={this.state.TotalAll[0].bstelAant} enk={this.state.TotalAll[0].enkAant} astamTel={this.state.TotalAll[0].astamTel} bstelTel={this.state.TotalAll[0].bstelTel} bedrag={this.state.TotalAll[0].bedrag} totalVogel={this.state.TotalAll[0].totalVogel}/>  </div>
-          <div style={{flex:1}}><Form total={this.state.TotalAll}/></div>
+          <div style={{flex:1}}><Form total={this.state.TotalAll} onSetEmail={this.handleEmail}/></div>
           </div>   
           <ProductTable onProductTableUpdate={this.handleProductTable.bind(this)} onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)} products={this.state.products} filterText={this.state.filterText}/> 
-            
+          <Footer email={this.state.email}/>
         </div>
       );
   
