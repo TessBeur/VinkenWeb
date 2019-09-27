@@ -18,13 +18,12 @@ export default class Search extends React.Component{
     this.searchHandler = this.searchHandler.bind(this);
     this.renderSuggestions = this.renderSuggestions.bind(this);
     this.handleClick = this.handleClick.bind(this);
-    this.showMessage = this.showMessage.bind(this);
-            
+              
  
   }
 
 componentDidMount(){
-  fetch('https://script.google.com/macros/s/AKfycbz3ZkC81OfuuBKPu00YEsUiLi11Qw-HH2nS123U5Wz0wiCMPmHO/exec')
+  fetch('https://script.google.com/macros/s/AKfycbziMa9zT5VVweqTdFZFpoe8DbUqUUXqYnCPA6_Q3sq9WvEUVqI/exec')
       .then(response => response.json())
       .then(data => this.setState({ data:data.vogelindex }));
       
@@ -46,6 +45,7 @@ componentDidMount(){
     let searcjQery = event.target.value.toLowerCase(),
         displayedVogels = this.state.data.filter((el) => {
           let searchValue = el.Omschrijving.toLowerCase();
+         
           return searchValue.indexOf(searcjQery) !== -1;
         })
     this.setState({
@@ -53,7 +53,9 @@ componentDidMount(){
       text:searcjQery,
       displayedTotal:this.state.data
     })
+
   }
+  
   suggestionSelected(value){
     this.setState(()=>({
       text:value.Omschrijving,
@@ -64,23 +66,8 @@ componentDidMount(){
     this.props.onUpdate([{klas:value.Klasse_nr, om:value.Omschrijving}]);
     this.setState({klasnr:value.Klasse_nr, vogel:value.Omschrijving, isToggleOn:false});
   }
-  showMessage(e) {
-    console.log(this.state.data)
-    if(this.state.isToggleOn==true){
-        
-       return(
-           <table>
-               <tbody>
-               {this.state.data2.map(item=><tr key={item.id}>{item.name}</tr>)}
-                </tbody>
-           </table>
-       )
-      }else{
-          return null}
-    }
-  
+    
   renderSuggestions(elem){
-   
     if (this.state.text=='' && this.state.displayedVogels.length >0 ){
       this.setState(()=>({
             displayedVogels:[],
@@ -92,7 +79,7 @@ componentDidMount(){
         <div style={{position: 'absolute', backgroundColor: "#ffff", width: 320,}}>
           <table className="table table-striped table-hover active"style={{ border: "1px solid grey", marginBottom: 0 }} >
             <tbody style={{height:200,overflowY:"scroll",display:"block"}}>
-            {this.state.data.map((el)=><tr key={el.Klasse_nr} onClick={()=>this.suggestionSelected(el)}>{el.Omschrijving}</tr>)}
+            {this.state.data.map((el)=><tr key={el.id} onClick={()=>this.suggestionSelected(el)}>{el.Omschrijving}</tr>)}
             </tbody>
           </table>
         </div>
@@ -101,7 +88,7 @@ componentDidMount(){
         <div style={{position: 'absolute', backgroundColor: "#ffff", width: 320,}}>
         <table className="table table-striped table-hover active"style={{ border: "1px solid grey", marginBottom: 0 }} >
            <tbody>{/*style={{height:200,overflowY:"auto",display:"block"}} */}
-          {this.state.displayedVogels.map((el)=><tr key={el.Klasse_nr} onClick={()=>this.suggestionSelected(el)}>{el.Omschrijving}</tr>)}
+          {this.state.displayedVogels.map((el)=><tr key={el.id} onClick={()=>this.suggestionSelected(el)}>{el.Omschrijving}</tr>)}
           </tbody>
         </table>
         </div>

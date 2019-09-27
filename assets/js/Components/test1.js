@@ -1,16 +1,21 @@
-import React from 'react';
-const Email =React.createContext();
-class MyProvider extends React.Component{
-  constructor(props){
-    super(props);
-  this.state={
-    name:"tess"
-  }
+import React,{useState,createContext} from 'react';
+
+export const MovieContext=createContext();
+
+export const MovieProvider= props =>{
+const[movies,setMovies]=useState([
+    { name:"test",
+      price:"5",
+      id:55
+    },
+    { name:"test2",
+      price:"2",
+      id:22
+    },
+  ]);
+  return(
+    <MovieContext.Provider value={'hello'}>
+      {props.children}
+    </MovieContext.Provider>
+  );
 }
-  render(){
-    return(
-      <Email.Provider 
-       value="test">{this.props.children}</Email.Provider>
-    )
-  }
-}export default MyProvider

@@ -6,12 +6,18 @@ import Footer from './footer';
 
 
 
+
 class TableBirds extends React.Component {
 
     constructor(props) {
       super(props);
       
-      this.state={filterText: "", checkBedrag:false, checkSoort:false, email:''}
+      this.state={filterText: "", 
+                checkBedrag:false, 
+                checkSoort:false, 
+                datum:'',
+                email:'',
+                emaildatum:''}
       this.state.TotalAll=[
         {
         astamAant:"0",
@@ -36,7 +42,8 @@ class TableBirds extends React.Component {
             bedrag:"0"
         }
       ];
-      this.handleEmail = this.handleEmail.bind(this);
+      this.Email= this.Email.bind(this);
+      this.Date= this.Date.bind(this);
     
     }
     handleRowDel(product) {
@@ -121,24 +128,30 @@ class TableBirds extends React.Component {
             }]
         });
     }
-    handleEmail(emailValue){
-     this.setState({email: emailValue});//get ingevuld email van from
-  }
-        
+Email(val){
+  this.setState({email:val})
+}
+Date(val){
+  this.setState({emaildatum:val})
+}
+
     
     render() {
+      
       // alle vogels staan in this.state.products
       //console.log(this.state.products)
       return (
+       
         <div>
           <div style={{display: "flex", flexWrap:"wrap"}}>
             <div style={{flex:1,marginRight:10}}>
           <Total astam={this.state.TotalAll[0].astamAant} bstel={this.state.TotalAll[0].bstelAant} enk={this.state.TotalAll[0].enkAant} astamTel={this.state.TotalAll[0].astamTel} bstelTel={this.state.TotalAll[0].bstelTel} bedrag={this.state.TotalAll[0].bedrag} totalVogel={this.state.TotalAll[0].totalVogel}/>  </div>
-          <div style={{flex:1}}><Form total={this.state.TotalAll} onSetEmail={this.handleEmail}/></div>
-          </div>   
-          <ProductTable onProductTableUpdate={this.handleProductTable.bind(this)} onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)} products={this.state.products} filterText={this.state.filterText}/> 
-          <Footer email={this.state.email}/>
+          <div style={{flex:1}}><Form total={this.state.TotalAll} email={this.state.email} date={this.state.emaildatum} /></div>
+          </div> 
+          <ProductTable onProductTableUpdate={this.handleProductTable.bind(this)} onRowAdd={this.handleAddEvent.bind(this)} onRowDel={this.handleRowDel.bind(this)} products={this.state.products} filterText={this.state.filterText} /> 
+          <Footer setEmail={this.Email} setDate={this.Date} />
         </div>
+        
       );
   
     }

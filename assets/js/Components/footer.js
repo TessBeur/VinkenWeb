@@ -1,16 +1,25 @@
 import React from 'react';
 
-const email=React.createContext();
-
 class Footer extends React.Component {
     constructor(props) {
         super(props);
+        
         this.state = {
           day: new Date().getDate(),
           month: new Date().getMonth()+1,
-          year: new Date().getFullYear()
+          year: new Date().getFullYear(),
         };
+        this.handleEmail= this.handleEmail.bind(this);
+        this.handleDate= this.handleDate.bind(this);
       }
+ handleEmail(e){
+     var email=e.target.value;
+     this.props.setEmail(email)
+  }
+  handleDate(e){ 
+    var date=e.target.value;
+    this.props.setDate(date)
+ }
 
     render() {
         return (
@@ -22,14 +31,17 @@ class Footer extends React.Component {
                 <div className="panel-body">
                 <br></br>
                <div style={{display: "flex", flexWrap:"wrap"}}>
-               <div style={{flex:1}}>Datum:<br></br><br></br>
-               <br></br>Email:</div>
-                <div style={{flex:1}}>{this.state.day}/{this.state.month}/{this.state.year}<br></br><br></br>
-                <br></br>{this.props.email}</div>
+               <div style={{flex:1}}>Datum inschrijving:<br/><br/>
+               <br/>Handtekening (email):<br/><br/>
+                    Datum handtekening:</div>
+                <div style={{flex:1}}><strong>{this.state.day}/{this.state.month}/{this.state.year}</strong><br/><br/>
+                <br/><input className="form-control input-sm" style={{width:"90%"}} name="email" placeholder="Email..." onChange={this.handleEmail}></input>
+                
+                <br/><input className="form-control input-sm" style={{width:"90%"}} type="date" placeholder="Datum handtekening..." onChange={this.handleDate}></input></div>
                 <div style={{flex:1}}>Ondergetekende verklaart dat de hiervoor vermelde inschrijving:
-                <br></br> zijn/haar eigendom is en 
-                <br></br>   - hij/zij inschrijft onder de voor deze tentoonstelling
-                <br></br>  geldende bepalingen. (Commissie bepalingen zie beneden).</div>
+                <br/> zijn/haar eigendom is en 
+                <br/>   - hij/zij inschrijft onder de voor deze tentoonstelling
+                <br/>  geldende bepalingen. (Commissie bepalingen zie beneden).</div>
                 </div>
                 </div>
                 </div>
