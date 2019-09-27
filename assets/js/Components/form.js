@@ -106,7 +106,7 @@ class Form extends React.Component {
       e.preventDefault();
       if(this.handleValidation() && this.props.total[0].bedrag != "0" && this.props.total[0].totalVogel != "0"){
         this.setState({send: true});
-        
+        /// alle data verzamen voor verzenden email
         alert("Inschrijving compleet u ontvangt binnen enkele minuten een bevestigings email");
      
       }else{
@@ -117,16 +117,39 @@ class Form extends React.Component {
         }if(this.props.total[0].totalVogel == "0"){
           alert("Voer het aantal vogels in")
         }
+        if(!this.props.email || (!this.props.email.split(' ').join('').length)){
+          alert("Voer u handtekening in")
+        }
+        if(this.props.email){
+          let lastAtPos = this.props.email.lastIndexOf('@');
+          let lastDotPos = this.props.email.lastIndexOf('.');
+    
+          if (!(lastAtPos < lastDotPos && lastAtPos > 0 && this.props.email.indexOf('@@') == -1 && lastDotPos > 2 && (this.props.email.length - lastDotPos) > 2)) {
+            alert("Vul een geldig email bij u handtekening in");
+          }
+        }
+        if(!this.props.date){
+          alert("Voer een datum bij u handtekening in")
+        }
         this.setState({send: false});
       }
   
     }
+
+
+   
+
+
+
+
+
+
+
   
     handleChange(field, e){    		
       let fields = this.state.fields;
       fields[field] = e.target.value;        
       this.setState({fields});
-      this.props.onSetEmail(this.state.fields.email)
     }
   
     render(){

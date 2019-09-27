@@ -4,6 +4,7 @@ import Tableheader from './tableheader';
 import Tableexample from './tableexample';
 import ProductRow from './productrow';
 
+
 class ProductTable extends React.Component {
   
   render() {
@@ -39,7 +40,7 @@ class ProductTable extends React.Component {
           </tbody>
           
         </table>
-       
+  
       </div>
     );
 
